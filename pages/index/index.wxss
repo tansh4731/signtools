@@ -1,0 +1,82 @@
+.container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.index_clock_time {
+  position: relative;
+  display: flex;
+  flex: 2;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #3197ed;
+  transition: all .5s;
+  z-index: 1;
+  padding: 10px 0;
+}
+
+.index_clock_time-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  transition: all .3s;
+}
+
+.index_clock_time_show {
+  font-size: 40px;
+  color: #fff;
+  font-weight: lighter;
+  transition: font-size .3s;
+}
+
+.index_sign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 2;
+  padding-top: 40px;
+  transition: all .3s;
+}
+
+.index_sign_ctrl {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  width: 120px;
+  height: 120px;
+  margin: 0 20px;
+  border-radius: 50%;
+  transition: all .7s;
+  background-color: #48c23d;
+}
+
+.index_footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0;
+  padding-top: 40px;
+  transition: all .3s;
+}
+
+.index_footer_show {
+  position: relative;
+  display: flex;
+  flex: auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: all .5s;
+  padding: 10px 0;
+}

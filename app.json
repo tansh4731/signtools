@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/record/record",
+    "pages/logs/logs",
+    "pages/settings/settings"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "black",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#ccc",
+    "selectedColor": "black",
+    "backgroundColor": "#EEEEEE",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "打卡",
+        "iconPath": "images/index.png",
+        "selectedIconPath": "images/index.png"
+      },
+      {
+        "pagePath": "pages/record/record",
+        "text": "查看日历",
+        "iconPath": "images/record.png",
+        "selectedIconPath": "images/recordHL.png"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "详细记录",
+        "iconPath": "images/logs.png",
+        "selectedIconPath": "images/logsHL.png"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置",
+        "iconPath": "images/settings.png",
+        "selectedIconPath": "images/settingsHL.png"
+      }
+    ]
+  }
+}

@@ -1,13 +1,13 @@
 <view class='month flex m-around'>
-    <view class='arrow' bindtap='prevMonth'>《 </view>
-    <view>
-        <picker mode="date" value="{{date}}" start="2015-09" end="2020-09" fields='month' bindchange="bindDateChange">
-        <view>
-            {{date}}
-        </view>
-        </picker>
-    </view>
-    <view class='arrow' bindtap='nextMonth'> 》</view>
+  <view class='arrow' bindtap='prevMonth'>《 </view>
+  <view>
+    <picker mode="date" value="{{date}}" start="2015-09" end="2020-09" fields='month' bindchange="bindDateChange">
+      <view>
+        {{date}}
+      </view>
+    </picker>
+  </view>
+  <view class='arrow' bindtap='nextMonth'> 》</view>
 </view>
 <view class='calendar flex column s-center'>
   <view class='week-row flex m-around'>
@@ -15,35 +15,52 @@
   </view>
   <swiper class='swpier-box' circular="true" current="{{swiperIndex}}" bindchange='swiperChange'>
     <swiper-item class='flex m-around days-table '>
-      <view wx:for="{{calendar.first}}" wx:for-item='x' wx:key='x.date'
-        class='grid {{x.month === month?"":"notCurrent"}} {{x.date === today?"today":""}} {{x.stateShow === 1 ? "signdone":""}} {{x.stateShow === 0 ? "signundone":""}}' data-month='{{x.month}}' data-day='{{x.day}}' data-date='{{x.date}}' data-test='{{(year + "-" +month + "-" + day)}}'  bindtap='bindDayTap'>
+      <view wx:for="{{calendar.first}}" wx:for-item='x' wx:key='x.date' class='grid {{x.month === month?"":"notCurrent"}} {{x.date === today?"today":""}} {{x.stateShow === 1 ? "signdone":""}} {{x.stateShow === 0 ? "signundone":""}}' data-month='{{x.month}}'
+        data-day='{{x.day}}' data-date='{{x.date}}' data-test='{{(year + "-" +month + "-" + day)}}' bindtap='bindDayTap'>
         <view>{{x.date === today?'今天':x.day}}</view>
       </view>
     </swiper-item>
     <swiper-item class='flex m-around days-table '>
-      <view wx:for="{{calendar.second}}" wx:for-item='x' wx:key='x.date'
-        class='grid {{x.month === month?"":"notCurrent"}} {{x.date === today?"today":""}} {{x.stateShow === 1 ? "signdone":""}} {{x.stateShow === 0 ? "signundone":""}}' data-month='{{x.month}}' data-day='{{x.day}}' data-date='{{x.date}}' data-test='{{(year + "-" +month + "-" + day)}}'  bindtap='bindDayTap'>
+      <view wx:for="{{calendar.second}}" wx:for-item='x' wx:key='x.date' class='grid {{x.month === month?"":"notCurrent"}} {{x.date === today?"today":""}} {{x.stateShow === 1 ? "signdone":""}} {{x.stateShow === 0 ? "signundone":""}}' data-month='{{x.month}}'
+        data-day='{{x.day}}' data-date='{{x.date}}' data-test='{{(year + "-" +month + "-" + day)}}' bindtap='bindDayTap'>
         <view>{{x.date === today?'今天':x.day}}</view>
       </view>
     </swiper-item>
     <swiper-item class='flex m-around days-table'>
-      <view wx:for="{{calendar.third}}" wx:for-item='x' wx:key='x.date'
-        class='grid {{x.month === month?"":"notCurrent"}} {{x.date === today?"today":""}} {{x.stateShow === 1 ? "signdone":""}} {{x.stateShow === 0 ? "signundone":""}}' data-month='{{x.month}}' data-day='{{x.day}}' data-date='{{x.date}}' bindtap='bindDayTap'>
+      <view wx:for="{{calendar.third}}" wx:for-item='x' wx:key='x.date' class='grid {{x.month === month?"":"notCurrent"}} {{x.date === today?"today":""}} {{x.stateShow === 1 ? "signdone":""}} {{x.stateShow === 0 ? "signundone":""}}' data-month='{{x.month}}'
+        data-day='{{x.day}}' data-date='{{x.date}}' bindtap='bindDayTap'>
         <view>{{x.date === today?'今天':x.day}}</view>
       </view>
     </swiper-item>
     <swiper-item class='flex m-around days-table '>
-      <view wx:for="{{calendar.fourth}}" wx:for-item='x' wx:key='x.date'
-        class='grid {{x.month === month?"":"notCurrent"}} {{x.date === today?"today":""}} {{x.date == beSelectDate ? "choice":""}}' data-month='{{x.month}}' data-day='{{x.day}}' data-date='{{x.date}}' bindtap='bindDayTap'>
+      <view wx:for="{{calendar.fourth}}" wx:for-item='x' wx:key='x.date' class='grid {{x.month === month?"":"notCurrent"}} {{x.date === today?"today":""}} {{x.date == beSelectDate ? "choice":""}}' data-month='{{x.month}}' data-day='{{x.day}}' data-date='{{x.date}}'
+        bindtap='bindDayTap'>
         <view>{{x.date === today?'今天':x.day}}</view>
       </view>
     </swiper-item>
   </swiper>
   <view>
-  <picker mode="date" value="{{date}}" start="2015-09" end="2020-09" fields='month' bindchange="bindDateChange">
-        <view>
-            今天
-        </view>
-        </picker>
+    <picker mode="date" value="{{date}}" start="2015-09" end="2020-09" fields='month' bindchange="bindDateChange">
+      <view>
+        今天
+      </view>
+    </picker>
   </view>
+  <view>
+    <view>{{year}}年{{month}}月{{day}}日</view>
+    <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{years}}" style="line-height: 50px">{{item}}年</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{months}}" style="line-height: 50px">{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{days}}" style="line-height: 50px">{{item}}日</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+    <input value='{{time}}' placeholder='选择时间' />
+  </picker>
 </view>

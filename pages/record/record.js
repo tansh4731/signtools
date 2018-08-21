@@ -116,6 +116,9 @@ const conf = {
     return calendar
   },
   bindDayTap(e) {
+    wx.navigateTo({
+      url: 'detail',
+    })
     let { month, year } = this.data
       , time = this.countMonth(year, month)
       , tapMon = e.currentTarget.dataset.month

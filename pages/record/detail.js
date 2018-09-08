@@ -38,8 +38,9 @@ for (let i = 0; i < 60; i++) {
 }
 Page({
   data: {
+    date: '',
     time: '',
-    multiArray: [years, months, days, hours, minutes],
+    multiArray: [years, months, days, hours, minutes, [1,2]],
     multiIndex: [0, 0, 0, 0, 0],
   },
   //获取时间日期
@@ -59,6 +60,14 @@ Page({
     })
     console.log(this.data.time);
   },
+
+  onLoad: function (options) {
+    // 页面初始化 options为页面跳转所带来的参数
+    this.setData({
+      date: options.date
+    })
+  },
+
   //监听picker的滚动事件
   bindMultiPickerColumnChange: function (e) {
     // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);

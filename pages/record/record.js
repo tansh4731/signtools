@@ -4,6 +4,7 @@ let choose_year = null,
   choose_month = null;
 const conf = {
   data: {
+    records: null,
     day: '',
     year: '',
     month: '',
@@ -21,6 +22,7 @@ const conf = {
     swiperIndex: 1,
     showCaldenlar: false
   },
+
   onLoad() {
     const date = new Date()
       , month = this.formatMonth(date.getMonth() + 1)
@@ -38,6 +40,27 @@ const conf = {
       beSelectDate: today,
       date: `${year}-${month}`
     })
+  },
+
+  onShow() {
+    this.data.records = wx.getStorageSync('records');
+    if (records.length > 0) {
+      records[0].signTime = util.formatTime(records[0].signTime, 'Y/M/D h:m:s');
+      this.setData({
+        currentTimeText: util.formatTime(Date.now(), 'Y/M/D\nh:m:s'),
+        lastRecord: records[0]
+      })
+    }
+    else {
+      this.setData({
+        currentTimeText: util.formatTime(Date.now(), 'Y/M/D\nh:m:s')
+      })
+    }
+  },
+
+  isDayOk(year, month, day)
+  {
+      return false;
   },
 
   showCaldenlar() {
@@ -117,7 +140,7 @@ const conf = {
   },
   bindDayTap(e) {
     wx.navigateTo({
-      url: 'detail',
+      url: 'detail?date=' + e.currentTarget.dataset.date,
     })
     let { month, year } = this.data
       , time = this.countMonth(year, month)
@@ -320,9 +343,13 @@ const conf = {
       {
         stateShow = 2
       }
-      else
+      else if(this.isDayOk(year, month, day))
       {
         stateShow = 1
+      }
+      else
+      {
+        stateShow = 0
       }
 
       days.push({

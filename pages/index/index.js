@@ -5,7 +5,8 @@ Page({
   data: {
     currentTimeText: new util.formatTime(Date.now(), 'Y/M/D\nh:m:s'),
     lastRecord: {},
-    toastHidden: true
+    toastHidden: true,
+    setInter: null
   },
 
   onShow: function () {
@@ -27,9 +28,13 @@ Page({
 
     }
     
-    setInterval((function () {
+    this.data.setInter = setInterval((function () {
       this.updateClockTime()
     }).bind(this), 1000)
+  },
+
+  onHide: function () {
+    clearInterval(this.data.setInter)
   },
 
   startSign: function (e) {

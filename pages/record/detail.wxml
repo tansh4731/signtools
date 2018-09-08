@@ -1,7 +1,7 @@
 <view>
   <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
     <view>
-      今天
+      {{date}}
     </view>
   </picker>
 </view>

@@ -1,14 +1,23 @@
 <view class="container">
   <view class="index_clock_time">
     <view class="index_clock_time-wrap">
-      <text class="index_clock_time_show">{{currentTimeText}}</text>
+      <text class="index_clock_time_show">
+      {{currentTimeText}}
+      </text>
     </view>
   </view>
-  <view class="index_footer">
-    <text class="index_footer_show">打卡时间：{{lastRecord.signTime}}</text>
-  </view>
+
+  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+    <view class="index_footer">
+      <text bindtap="editLastRecord" class="index_footer_show">
+      打卡时间：{{lastRecord.dateText}}
+      </text>
+    </view>
+  </picker>
+
   <view class="index_sign">
     <view bindtap="startSign" class="index_sign_ctrl">打卡</view>
   </view>
 </view>
+
 <toast hidden="{{toastHidden}}" bindchange="hideToast">打卡成功！</toast>

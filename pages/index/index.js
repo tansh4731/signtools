@@ -1,43 +1,146 @@
 const util = require('../../utils/util.js')
 
+const date = new Date();
+const years = [];
+const months = [];
+const days = [];
+const hours = [];
+const minutes = [];
+const seconds = [];
+
+for (let i = 1990; i <= date.getFullYear() + 5; i++) {
+  years.push("" + i);
+}
+
+for (let i = 1; i <= 12; i++) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  months.push("" + i);
+}
+
+for (let i = 1; i <= 31; i++) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  days.push("" + i);
+}
+
+for (let i = 0; i < 24; i++) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  hours.push("(H)" + i);
+}
+
+for (let i = 0; i < 60; i++) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  minutes.push("(M)" + i);
+}
+
+for (let i = 0; i < 60; i++) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  seconds.push("(S)" + i);
+}
+
 Page({
 
   data: {
     currentTimeText: new util.formatTime(Date.now(), 'Y/M/D\nh:m:s'),
     lastRecord: {},
     toastHidden: true,
-    setInter: null
+    setInter: null,
+
+    date: '',
+    time: '',
+    multiArray: [years, months, days, hours, minutes, seconds],
+    multiIndex: [0, 0, 0, 0, 0, 0],
   },
 
-  onShow: function () {
+  //获取时间日期
+  bindMultiPickerChange: function(e) {
+    // console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      multiIndex: e.detail.value
+    })
+    const index = this.data.multiIndex;
+    const year = this.data.multiArray[0][index[0]]
+    const month = this.data.multiArray[1][index[1]]
+    const day = this.data.multiArray[2][index[2]]
+    const hour = this.data.multiArray[3][index[3]].substring(3)
+    const minute = this.data.multiArray[4][index[4]].substring(3)
+    const second = this.data.multiArray[5][index[5]].substring(3)
 
+    var tmp_date = new Date();
+    tmp_date.setFullYear(year);
+    tmp_date.setMonth(month - 1);
+    tmp_date.setDate(day);
+    tmp_date.setHours(hour);
+    tmp_date.setMinutes(minute);
+    tmp_date.setSeconds(second);
+
+    var tmpLastRecord = {
+      signTime: tmp_date.valueOf(),
+    }
+
+    this.updateLastRecord(tmpLastRecord)
+
+    this.setData({
+      toastHidden: false
+    })
+
+    this.showLastRecord();
+
+    this.setData({
+      time: year + '-' + month + '-' + day + ' ' + hour + ':' + minute
+    })
+    console.log(this.data.time);
+  },
+
+  onLoad: function(options) {
+    // 页面初始化 options为页面跳转所带来的参数
+    this.setData({
+      date: options.date
+    })
+  },
+
+  //监听picker的滚动事件
+  bindMultiPickerColumnChange: function(e) {
+    // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    var data = {
+      multiArray: this.data.multiArray,
+      multiIndex: this.data.multiIndex
+    };
+    data.multiIndex[e.detail.column] = e.detail.value;
+
+    this.setData(data);
+  },
+
+  onShow: function() {
     let records = wx.getStorageSync('records');
-    if(records.length > 0)
-    {
-      records[0].signTime = util.formatTime(records[0].signTime, 'Y/M/D h:m:s');
-      this.setData({
-        currentTimeText: util.formatTime(Date.now(), 'Y/M/D\nh:m:s'),
-        lastRecord: records[0]
-      })
-    }
-    else
-    {
-      this.setData({
-        currentTimeText: util.formatTime(Date.now(), 'Y/M/D\nh:m:s')
-      })
 
-    }
-    
-    this.data.setInter = setInterval((function () {
+    this.showLastRecord();
+
+    this.setData({
+      currentTimeText: util.formatTime(Date.now(), 'Y/M/D\nh:m:s')
+    })
+
+    this.data.setInter = setInterval((function() {
       this.updateClockTime()
     }).bind(this), 1000)
+
+    this.updatePickerToLast();
   },
 
-  onHide: function () {
+  onHide: function() {
     clearInterval(this.data.setInter)
   },
 
-  startSign: function (e) {
+  startSign: function(e) {
 
     var tmpLastRecord = {
       signTime: Date.now()
@@ -49,28 +152,68 @@ Page({
       toastHidden: false
     })
 
-    tmpLastRecord.signTime = util.formatTime(tmpLastRecord.signTime, 'Y/M/D h:m:s');
-    this.setData({
-      lastRecord: tmpLastRecord
-    })
-
+    this.showLastRecord();
   },
 
-  updateClockTime: function () {
+  updateClockTime: function() {
     this.setData({
       currentTimeText: util.formatTime(Date.now(), 'Y/M/D\nh:m:s')
     })
   },
 
-  hideToast: function () {
+  hideToast: function() {
     this.setData({
       toastHidden: true
     })
   },
-  
-  saveRecord: function (record) {
+
+  saveRecord: function(record) {
     var records = wx.getStorageSync('records') || []
     records.unshift(record)
     wx.setStorageSync('records', records)
-  }
+  },
+
+  updateLastRecord: function(record) {
+    var records = wx.getStorageSync('records') || []
+    records[0] = record
+    wx.setStorageSync('records', records)
+  },
+
+  updatePickerToLast: function() {
+    let records = wx.getStorageSync('records');
+    var date = new Date(records[0].signTime);
+
+    var data = {
+      multiArray: this.data.multiArray,
+      multiIndex: this.data.multiIndex
+    };
+    data.multiIndex[0] = date.getFullYear() - 1990;
+    data.multiIndex[1] = date.getMonth();
+    data.multiIndex[2] = date.getDate() - 1;
+    data.multiIndex[3] = date.getHours();
+    data.multiIndex[4] = date.getMinutes();
+    data.multiIndex[5] = date.getSeconds();
+
+    this.setData(data);
+  },
+
+  editLastRecord: function(e) {
+    this.updatePickerToLast();
+  },
+
+  showLastRecord: function() {
+    let records = wx.getStorageSync('records');
+    var tmp_lastRecord = {};
+    var tmp_date = new Date(records[0].signTime);
+
+    if (records.length > 0) {
+      tmp_lastRecord.dateText = util.formatTime(records[0].signTime, 'Y/M/D h:m:s');
+      tmp_lastRecord.date = tmp_date;
+
+      this.setData({
+        lastRecord: tmp_lastRecord
+      })
+    }
+  },
+
 })

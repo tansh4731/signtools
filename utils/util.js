@@ -29,7 +29,20 @@ function formatTime(number, format) {
   return format;
 }
 
-function formatTime1(date) {
+function getDateByTimeNumber(number) {
+  var date = new Date(number);
+  var record = {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+    hours: date.getHours(),
+    minutes: date.getMinutes(),
+    seconds: date.getSeconds()
+  }
+  return record;
+}
+
+function formatTimeByDate(date) {
   var year = date.getFullYear()
   var month = date.getMonth() + 1
   var day = date.getDate()
@@ -57,7 +70,8 @@ function curMonth(date) {//显示今天的月
 
 module.exports = {
   formatTime: formatTime,
-  formatTime1: formatTime1,
+  formatTimeByDate: formatTimeByDate,
+  getDateByTimeNumber: getDateByTimeNumber,
   today: today,//显示今天的日
   curMonth: curMonth//显示今天的月
 }

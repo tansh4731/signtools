@@ -1,51 +1,5 @@
 const util = require('../../utils/util.js')
-
-const date = new Date();
-const years = [];
-const months = [];
-const days = [];
-const hours = [];
-const minutes = [];
-const seconds = [];
-
-for (let i = 1990; i <= date.getFullYear() + 5; i++) {
-  years.push("" + i);
-}
-
-for (let i = 1; i <= 12; i++) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  months.push("" + i);
-}
-
-for (let i = 1; i <= 31; i++) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  days.push("" + i);
-}
-
-for (let i = 0; i < 24; i++) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  hours.push("(H)" + i);
-}
-
-for (let i = 0; i < 60; i++) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  minutes.push("(M)" + i);
-}
-
-for (let i = 0; i < 60; i++) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  seconds.push("(S)" + i);
-}
+const util_picker = require('../../utils/picker.js')
 
 Page({
 
@@ -57,7 +11,7 @@ Page({
 
     date: '',
     time: '',
-    multiArray: [years, months, days, hours, minutes, seconds],
+    multiArray: util_picker.getDatePickerArray(),
     multiIndex: [0, 0, 0, 0, 0, 0],
   },
 
@@ -104,7 +58,7 @@ Page({
   onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
-      date: options.date
+      date: ""
     })
   },
 

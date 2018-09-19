@@ -8,7 +8,7 @@ function formatNumber(n) {
  * 时间戳转化为年 月 日 时 分 秒
  * number: 传入时间戳
  * format：返回格式，支持自定义，但参数必须与formateArr里保持一致
-*/
+ */
 function formatTime(number, format) {
 
   var formateArr = ['Y', 'M', 'D', 'h', 'm', 's'];
@@ -55,23 +55,68 @@ function formatTimeByDate(date) {
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
+function formatYmdByDate(date) {
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()
+
+  var hour = date.getHours()
+  var minute = date.getMinutes()
+  var second = date.getSeconds()
+
+
+  return [year, month, day].map(formatNumber).join('/')
+}
+
+function formatHmsByDate(date) {
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()
+
+  var hour = date.getHours()
+  var minute = date.getMinutes()
+  var second = date.getSeconds()
+
+
+  return [hour, minute, second].map(formatNumber).join(':')
+}
+
 function formatNumber(n) {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
 
-function today(date) {//显示今天的日
+function today(date) { //显示今天的日
   return date.getDate();
 }
 
-function curMonth(date) {//显示今天的月
+function curMonth(date) { //显示今天的月
   return date.getMonth() + 1;
+}
+
+function sequence(a, b) {
+  if (a.signTime > b.signTime) {
+    return -1;
+
+  } else if (a.signTime < b.signTime) {
+    return 1
+
+  } else {
+    return 0;
+  }
+}
+
+function storageSort(data) {
+  return data.sort(sequence)
 }
 
 module.exports = {
   formatTime: formatTime,
   formatTimeByDate: formatTimeByDate,
   getDateByTimeNumber: getDateByTimeNumber,
-  today: today,//显示今天的日
-  curMonth: curMonth//显示今天的月
+  today: today, //显示今天的日
+  curMonth: curMonth, //显示今天的月
+  storageSort: storageSort,
+  formatHmsByDate: formatHmsByDate,
+  formatYmdByDate: formatYmdByDate
 }
